@@ -1,0 +1,16 @@
+// Common 
+"common.appName" = "iPhone Safety & Proxy";
+"common.continue" = "Continue";
+"common.next" = "Next";
+"common.privacy" = "Privacy Policy";
+"common.restore" = "Restore";
+"common.terms" = "Terms Conditions";
+
+// Paywall Screen
+"subscribe.cell.crossedPrice" = "49.99";
+"subscribe.cell.price" = "29.99";
+"subscribe.cell.subtitle" = "Pay Less, Get More";
+"subscribe.cell.title" = "Weekly";
+"subscribe.subtitle" = "Protect your data and privacy with Premium at half the cost.";
+"subscribe.timerSubtitle" = "Hurry up! This exclusive offer ends in";
+"subscribe.title" = "Before Time Runs Out!";
