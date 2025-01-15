@@ -54,7 +54,8 @@ class SubscribeViewController: BaseViewController {
 
     lazy var subtitleLabel = builder.createLabel(
         text: R.string.localizable.subscribeSubtitle(),
-        fontSize: 16
+        fontSize: 16,
+        letterSpacing: -0.5
     )
 
     lazy var subscriptionPlansTableView = builder.createTableView()
@@ -68,25 +69,29 @@ class SubscribeViewController: BaseViewController {
     lazy var timeTitle = builder.createLabel(
         text: Constants.getCurrentDateAndTime().time,
         textColor: .white, 
-        fontSize: 56,
-        isBold: true
+        fontSize: 72,
+        isBold: true,
+        letterSpacing: -2
     )
     
     lazy var timerSubtitle = builder.createLabel(
         text: R.string.localizable.subscribeTimerSubtitle(),
-        fontSize: 14
+        fontSize: 14,
+        letterSpacing: -0.5
     )
 
     lazy var timerTitle = builder.createLabel(
         text: "01 : 30",
         fontSize: 20,
-        isBold: true
+        isBold: true,
+        letterSpacing: -0.5
     )
 
     lazy var titleLabel = builder.createLabel(
         text: R.string.localizable.subscribeTitle(),
         fontSize: 18,
-        isBold: true
+        isBold: true,
+        letterSpacing: -0.5
     )
 
     lazy var topNotificationImageView = builder.createImageView(image: R.image.notificationTopLogo())
@@ -123,7 +128,7 @@ class SubscribeViewController: BaseViewController {
         super.viewWillDisappear(animated)
         timer?.invalidate()
     }
-    
+
     init(viewModel: SubscribeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

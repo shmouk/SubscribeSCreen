@@ -60,16 +60,23 @@ final class UIBuilder {
         fontSize: CGFloat = 16,
         textAlignment: NSTextAlignment = .center,
         isBold: Bool = false,
-        numberOfLines: Int = 0
+        numberOfLines: Int = 0,
+        letterSpacing: CGFloat = 0.0
     ) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
         label.textColor = textColor
         label.textAlignment = textAlignment
         label.font = isBold ? .boldSystemFont(ofSize: fontSize) : .systemFont(ofSize: fontSize)
         label.numberOfLines = numberOfLines
         label.isUserInteractionEnabled = true
+        
+        if let text = text {
+            let attributedString = NSMutableAttributedString(string: text)
+            attributedString.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: text.count))
+            label.attributedText = attributedString
+        }
+        
         return label
     }
     
