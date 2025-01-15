@@ -174,11 +174,36 @@ final class UIBuilder {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = color
-        if let cornerRadius {
+        if let cornerRadius = cornerRadius {
             view.layer.cornerRadius = cornerRadius
         }
         view.clipsToBounds = clipsToBounds
         view.isUserInteractionEnabled = true
         return view
+    }
+}
+
+extension UIBuilder {
+    func addBorder(
+        to view: UIView,
+        borderWidth: CGFloat,
+        borderColor: UIColor?
+    ) {
+        view.layer.borderWidth = borderWidth
+        view.layer.borderColor = borderColor?.cgColor
+    }
+    
+    func addBlur(
+        to view: UIView,
+        blurEffectStyle: UIBlurEffect.Style = .systemChromeMaterialDark,
+        cornerRadius: CGFloat = 24
+    ) {
+        let blurEffect = UIBlurEffect(style: blurEffectStyle)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = view.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.layer.cornerRadius = cornerRadius
+        blurView.clipsToBounds = true
+        view.addSubview(blurView)
     }
 }

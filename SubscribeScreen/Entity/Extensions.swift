@@ -34,3 +34,26 @@ extension UIButton {
         layer.add(pulse, forKey: nil)
     }
 }
+
+extension UIColor {
+    func adjusted(saturation: CGFloat, brightness: CGFloat) -> UIColor {
+        var hue: CGFloat = 0
+        var saturationOriginal: CGFloat = 0
+        var brightnessOriginal: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        self.getHue(&hue, saturation: &saturationOriginal, brightness: &brightnessOriginal, alpha: &alpha)
+        
+        let newSaturation = min(max(saturationOriginal * saturation, 0.0), 1.0)
+        let newBrightness = min(max(brightnessOriginal * brightness, 0.0), 1.0)
+        
+        return UIColor(hue: hue, saturation: newSaturation, brightness: newBrightness, alpha: alpha)
+    }
+}
+
+extension NSLayoutConstraint {
+    func withPriority(_ priority: UILayoutPriority) -> NSLayoutConstraint {
+        self.priority = priority
+        return self
+    }
+}

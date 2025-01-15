@@ -5,7 +5,7 @@ import Foundation
 enum SubscriptionType {
     case weekly
 
-    func subscriptions() -> [Subscription] { // не буду расписывать что ты тут нагородил. Лайк за попытку. Но вот название функции состоящее из одного существительного - это грустно
+    func subscriptionPlan() -> [Subscription] { 
         switch self {
         case .weekly:
             return [
@@ -32,7 +32,7 @@ struct Subscription {
 final class APIManager {
     static var shared = APIManager()
 
-    var subscriptionsArray: [Subscription] = SubscriptionType.weekly.subscriptions() // вот тут это проявляется - хрен пойми что происходит из-за неймингов
+    var subscriptionsArray: [Subscription] = SubscriptionType.weekly.subscriptionPlan()
     
     private init() { }
     

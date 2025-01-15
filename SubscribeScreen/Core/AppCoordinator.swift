@@ -24,18 +24,8 @@ class AppCoordinator: Coordinator {
     }
     
     func startFlow() {
-        let startViewController = StartViewController() // ты же вынес SubscribeViewController в createSubscribeController, так чего ты это тут все оставил, а не создал отдельный метод createStartViewController ?
+        let startViewController = createStartController()  
         self.navigationController.pushViewController(startViewController, animated: true)
-        
-        startViewController.didTapNext = { [weak self] in
-            guard let self = self else { return }
-            let subscribeController = self.createSubscribeController()
-            subscribeController.modalPresentationStyle = .overFullScreen // а почему ты это описываешь тут, а не в createSubscribeController ?
-            subscribeController.modalTransitionStyle = .coverVertical
-            DispatchQueue.main.async { // а остальной код у тебя не на мейне вызывается, что ты тут явно на мейн переходишь?
-                self.navigationController.present(subscribeController, animated: true)
-            }
-        }
     }
     
     func stop() {
@@ -44,12 +34,27 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator {
+    private func createStartController() -> UIViewController {
+        let controller = StartViewController()
+        
+        controller.didTapNext = { [weak self] in
+            guard let self = self else { return }
+            
+            let subscribeController = self.createSubscribeController()
+            subscribeController.modalPresentationStyle = .overFullScreen // эти параметры должны быть установлены перед тем как контроллер будет представлен с помощью метода present()
+            subscribeController.modalTransitionStyle = .coverVertical
+            self.navigationController.present(subscribeController, animated: true)
+        }
+        
+        return controller
+    }
+    
     private func createSubscribeController() -> UIViewController {
         let viewModel = SubscribeViewModel()
         let controller = SubscribeViewController(viewModel: viewModel)
         
         controller.didTapClose = { 
-            controller.dismiss(animated: true, completion: nil) // у тебя же есть navigationController. надо self.navigationController.dismiss(animated: true)
+            self.navigationController.dismiss(animated: true)
         }
         
         return controller

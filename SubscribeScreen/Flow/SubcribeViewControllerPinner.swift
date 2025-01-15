@@ -2,55 +2,68 @@ import UIKit.UILayoutGuide
 
 extension SubscribeViewController {
     func setupConstraints() {
-        let iphoneImageViewOffset: CGFloat = (Constants.screenHeight < 800) ? 10 : Constants.screenHeight * 0.116
-        let bgViewOffset: CGFloat  = (Constants.screenHeight < 800) ? 12 : 28
-        
         NSLayoutConstraint.activate([
-            closeImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            closeImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            closeImage.widthAnchor.constraint(equalToConstant: 24),
-            closeImage.heightAnchor.constraint(equalToConstant: 24)
+            closeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            closeImageView.widthAnchor.constraint(equalToConstant: 24),
+            closeImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
         
         NSLayoutConstraint.activate([
-            iphoneImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: iphoneImageViewOffset),
+            iphoneImageView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor),
+            iphoneImageView.bottomAnchor.constraint(equalTo: bgView.topAnchor, constant: -10).withPriority(.defaultHigh),
             iphoneImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            iphoneImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 306), // а чего не через отступы по бокам и соотнощение высоты с шириной? Тогда бы не такой отступ конский был бы на больщом резолюшене (я на про макс смотрю)
-            iphoneImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 302)
+            iphoneImageView.widthAnchor.constraint(equalTo: iphoneImageView.heightAnchor),
+            iphoneImageView.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.8),
+            iphoneImageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150)
         ])
         
         NSLayoutConstraint.activate([
-            dateTitle.topAnchor.constraint(equalTo: iphoneImageView.topAnchor, constant: 67),
-            dateTitle.centerXAnchor.constraint(equalTo: iphoneImageView.centerXAnchor),
-            dateTitle.heightAnchor.constraint(equalToConstant: 20),
-            dateTitle.widthAnchor.constraint(lessThanOrEqualTo: iphoneImageView.widthAnchor)
+            dateTitleLabel.topAnchor.constraint(equalTo: iphoneImageView.topAnchor, constant: 67),
+            dateTitleLabel.centerXAnchor.constraint(equalTo: iphoneImageView.centerXAnchor),
+            dateTitleLabel.heightAnchor.constraint(equalToConstant: 20),
+            dateTitleLabel.widthAnchor.constraint(lessThanOrEqualTo: iphoneImageView.widthAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            timeTitle.topAnchor.constraint(equalTo: iphoneImageView.topAnchor, constant: 102),
-            timeTitle.centerXAnchor.constraint(equalTo: iphoneImageView.centerXAnchor),
-            timeTitle.heightAnchor.constraint(equalToConstant: 56),
-            timeTitle.widthAnchor.constraint(lessThanOrEqualTo: iphoneImageView.widthAnchor)
+            timeTitleLabel.topAnchor.constraint(equalTo: iphoneImageView.topAnchor, constant: 102),
+            timeTitleLabel.centerXAnchor.constraint(equalTo: iphoneImageView.centerXAnchor),
+            timeTitleLabel.heightAnchor.constraint(equalToConstant: 56),
+            timeTitleLabel.widthAnchor.constraint(lessThanOrEqualTo: iphoneImageView.widthAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            topNotificationImageView.topAnchor.constraint(equalTo: iphoneImageView.topAnchor, constant: 112),
-            topNotificationImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topNotificationImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            topNotificationImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            topNotificationImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 66)
+            protectNotificationView.topAnchor.constraint(equalTo: iphoneImageView.topAnchor, constant: 112),
+            protectNotificationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            protectNotificationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            protectNotificationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            protectNotificationView.heightAnchor.constraint(greaterThanOrEqualToConstant: 66)
         ])
         
         NSLayoutConstraint.activate([
-            middleNotificationImageView.topAnchor.constraint(equalTo: topNotificationImageView.bottomAnchor, constant: 8),
-            middleNotificationImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            middleNotificationImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            middleNotificationImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            middleNotificationImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 82)
+            dataNotificationView.topAnchor.constraint(equalTo: protectNotificationView.bottomAnchor, constant: 8),
+            dataNotificationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dataNotificationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            dataNotificationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            dataNotificationView.heightAnchor.constraint(greaterThanOrEqualToConstant: 66)
         ])
         
         NSLayoutConstraint.activate([
-            bgView.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -bgViewOffset),
+            middleNatificationView.bottomAnchor.constraint(equalTo: dataNotificationView.bottomAnchor, constant: 8),
+            middleNatificationView.centerXAnchor.constraint(equalTo: dataNotificationView.centerXAnchor),
+            middleNatificationView.widthAnchor.constraint(equalTo: dataNotificationView.widthAnchor, multiplier: 0.92),
+            middleNatificationView.heightAnchor.constraint(equalTo: dataNotificationView.heightAnchor, multiplier: 0.92)
+        ])
+        
+        NSLayoutConstraint.activate([
+            bottomNatificationView.bottomAnchor.constraint(equalTo: middleNatificationView.bottomAnchor, constant: 8),
+            bottomNatificationView.centerXAnchor.constraint(equalTo: middleNatificationView.centerXAnchor),
+            bottomNatificationView.widthAnchor.constraint(equalTo: middleNatificationView.widthAnchor, multiplier: 0.92),
+            bottomNatificationView.heightAnchor.constraint(equalTo: middleNatificationView.heightAnchor, multiplier: 0.92)
+        ])
+        
+        NSLayoutConstraint.activate([
+            bgView.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -10),
             bgView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -58,14 +71,27 @@ extension SubscribeViewController {
         ])
 
         NSLayoutConstraint.activate([
-            saleImageView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 16),
-            saleImageView.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
-            saleImageView.heightAnchor.constraint(equalToConstant: 36),
-            saleImageView.widthAnchor.constraint(equalToConstant: 129)
+            saleView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 16),
+            saleView.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
+            saleView.heightAnchor.constraint(equalToConstant: 36),
+            saleView.widthAnchor.constraint(greaterThanOrEqualToConstant: 129)
         ])
-
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: saleImageView.bottomAnchor, constant: 6),
+            saleGiftImageView.leadingAnchor.constraint(equalTo: saleView.leadingAnchor, constant: 12),
+            saleGiftImageView.centerYAnchor.constraint(equalTo: saleView.centerYAnchor),
+            saleGiftImageView.widthAnchor.constraint(equalToConstant: 16),
+            saleGiftImageView.heightAnchor.constraint(equalTo: saleGiftImageView.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            saleLabel.centerYAnchor.constraint(equalTo: saleView.centerYAnchor),
+            saleLabel.topAnchor.constraint(equalTo: saleView.topAnchor, constant: 8),
+            saleLabel.trailingAnchor.constraint(equalTo: saleView.trailingAnchor, constant: -8),
+            saleLabel.bottomAnchor.constraint(equalTo: saleView.bottomAnchor, constant: -8),
+        ])
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: saleView.bottomAnchor, constant: 6),
             titleLabel.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
             titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20)
         ])
@@ -83,17 +109,17 @@ extension SubscribeViewController {
             subscriptionPlansTableView.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -12),
             subscriptionPlansTableView.heightAnchor.constraint(equalToConstant: 64)
         ])
-        
+
         NSLayoutConstraint.activate([
-            timerSubtitle.topAnchor.constraint(equalTo: subscriptionPlansTableView.bottomAnchor, constant: 8),
-            timerSubtitle.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
-            timerSubtitle.heightAnchor.constraint(greaterThanOrEqualToConstant: 27)
+            timerSubtitleLabel.topAnchor.constraint(equalTo: subscriptionPlansTableView.bottomAnchor, constant: 8),
+            timerSubtitleLabel.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
+            timerSubtitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 27)
         ])
         
         NSLayoutConstraint.activate([
-            timerTitle.topAnchor.constraint(equalTo: timerSubtitle.bottomAnchor, constant: 4),
-            timerTitle.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
-            timerTitle.heightAnchor.constraint(greaterThanOrEqualToConstant: 27)
+            timerTitleLabel.topAnchor.constraint(equalTo: timerSubtitleLabel.bottomAnchor, constant: 4),
+            timerTitleLabel.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
+            timerTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 27)
         ])
         
         NSLayoutConstraint.activate([
@@ -111,20 +137,20 @@ extension SubscribeViewController {
         ])
 
         NSLayoutConstraint.activate([
-            separatorLeft.centerYAnchor.constraint(equalTo: restoreLabel.centerYAnchor),
-            separatorLeft.leadingAnchor.constraint(equalTo: termsLabel.trailingAnchor, constant: 8),
-            separatorLeft.trailingAnchor.constraint(equalTo: restoreLabel.leadingAnchor, constant: -8),
-            separatorLeft.heightAnchor.constraint(equalToConstant: 4),
-            separatorLeft.widthAnchor.constraint(equalToConstant: 4)
+            separatorLeftView.centerYAnchor.constraint(equalTo: restoreLabel.centerYAnchor),
+            separatorLeftView.leadingAnchor.constraint(equalTo: termsLabel.trailingAnchor, constant: 8),
+            separatorLeftView.trailingAnchor.constraint(equalTo: restoreLabel.leadingAnchor, constant: -8),
+            separatorLeftView.heightAnchor.constraint(equalToConstant: 4),
+            separatorLeftView.widthAnchor.constraint(equalToConstant: 4)
         ])
 
 
         NSLayoutConstraint.activate([
-            separatorRight.centerYAnchor.constraint(equalTo: restoreLabel.centerYAnchor),
-            separatorRight.leadingAnchor.constraint(equalTo: restoreLabel.trailingAnchor, constant: 8),
-            separatorRight.trailingAnchor.constraint(equalTo: privacyLabel.leadingAnchor, constant: -8),
-            separatorRight.heightAnchor.constraint(equalToConstant: 4),
-            separatorRight.widthAnchor.constraint(equalToConstant: 4)
+            separatorRightView.centerYAnchor.constraint(equalTo: restoreLabel.centerYAnchor),
+            separatorRightView.leadingAnchor.constraint(equalTo: restoreLabel.trailingAnchor, constant: 8),
+            separatorRightView.trailingAnchor.constraint(equalTo: privacyLabel.leadingAnchor, constant: -8),
+            separatorRightView.heightAnchor.constraint(equalToConstant: 4),
+            separatorRightView.widthAnchor.constraint(equalToConstant: 4)
         ])
 
         NSLayoutConstraint.activate([
@@ -140,7 +166,3 @@ extension SubscribeViewController {
         ])
     }
 }
-
-// запусти на промаксе. Посмотри на шарики-сепараторы. Они явно не по центру. Суть констрейнтов, чтобы не зависеть от разрешения экрана, чтобы само растягивало. Это касается и верхних констант - если бы ты не захардкодил размеры картинки верхней, а написал через отступы, то тогда бы она авторастягивалась на оставшееся после кнопки и бг пространство и не нужны никакие константы тогда.
-
-// досконально с линейкой не сидел - остальное попало вроде в макет, ну и молодец

@@ -2,7 +2,6 @@ import UIKit
 
 final class SubscribeTableViewCell: UITableViewCell {
     private let builder = UIBuilder.shared
-    let defaults = UserDefaultsManager.shared
     
     private lazy var containerBackgroundView = builder.createTableCellBackground(
         hasBorder: true,

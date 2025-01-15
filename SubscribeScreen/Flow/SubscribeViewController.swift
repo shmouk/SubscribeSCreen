@@ -9,7 +9,15 @@ class SubscribeViewController: BaseViewController {
         cornerRadius: 14
     )
 
-    lazy var closeImage = builder.createImageView(image: R.image.closeLogo()) // чего не через Button? и нейминг некорректный
+    lazy var bottomNatificationView: UIView = {
+        let view = builder.createView(
+            color: .clear
+        )
+        builder.addBlur(to: view)
+        return view
+    }()
+
+    lazy var closeImageView = builder.createImageView(image: R.image.closeLogo())
 
     lazy var continueButton = builder.createButton(
         backgroundColor: R.color.black(),
@@ -17,21 +25,39 @@ class SubscribeViewController: BaseViewController {
         titleFontSize: 16,
         cornerRadius: 10
     )
-    
-    lazy var dateTitle = builder.createLabel( // если это Label, то и в нейминге есть слово Label
+
+    lazy var dataNotificationView: UIView = NotificationView(
+        title: R.string.localizable.subscribeNotificationDataTitle(),
+        subtitle: R.string.localizable.subscribeNotificationDataSubtitle(),
+        image: R.image.cardWarningLogo()
+    )
+
+    lazy var dateTitleLabel = builder.createLabel(
         text: Constants.getCurrentDateAndTime().date,
         textColor: .white,
         fontSize: 14
     )
-    
-    lazy var iphoneImageView = builder.createImageView(image: R.image.iphoneLogo()) // здесь же ты не забыл ImageView
 
-    lazy var middleNotificationImageView = builder.createImageView(image: R.image.notificationMiddleLogo()) // а ты что, фулл картинку нотификашки вытянул?) А как ты локализацию текста собрался сделать?) Или для чего нам файл со строками?)
+    lazy var iphoneImageView = builder.createImageView(image: R.image.iphoneLogo())
+
+    lazy var middleNatificationView: UIView = {
+        let view = builder.createView(
+            color: .clear
+        )
+        builder.addBlur(to: view)
+        return view
+    }()
 
     lazy var privacyLabel = builder.createLabel(
         text: R.string.localizable.commonPrivacy(),
         textColor: R.color.lightGray(),
         fontSize: 14
+    )
+
+    lazy var protectNotificationView: UIView = NotificationView(
+        title: R.string.localizable.subscribeNotificationProtectTitle(),
+        subtitle: R.string.localizable.subscribeNotificationProtectSubtitle(),
+        image: R.image.warningLogo()
     )
 
     lazy var restoreLabel = builder.createLabel(
@@ -40,14 +66,31 @@ class SubscribeViewController: BaseViewController {
         fontSize: 14
     )
 
-    lazy var saleImageView = builder.createImageView(image: R.image.saleLogo()) // и тут тоже как локализацию добавлять будем?
+    lazy var saleGiftImageView = builder.createImageView(image: R.image.giftLogo())
 
-    lazy var separatorLeft = builder.createView(
+    lazy var saleLabel = builder.createLabel(
+        text: R.string.localizable.subscribeSave(),
+        textColor: .white,
+        fontSize: 20,
+        isBold: true,
+        letterSpacing: -0.5
+    )
+
+    lazy var saleView: UIView = {
+        let view = builder.createView(
+            color: R.color.red(),
+            cornerRadius: 18
+        )
+        builder.addBorder(to: view, borderWidth: 1, borderColor: R.color.borderRed())
+        return view
+    }()
+
+    lazy var separatorLeftView = builder.createView(
         color: R.color.lightGray(),
         cornerRadius: 2
     )
 
-    lazy var separatorRight = builder.createView(
+    lazy var separatorRightView = builder.createView(
         color: R.color.lightGray(),
         cornerRadius: 2
     )
@@ -65,22 +108,22 @@ class SubscribeViewController: BaseViewController {
         textColor: R.color.lightGray(),
         fontSize: 14
     )
-    
-    lazy var timeTitle = builder.createLabel( // ..Label
+
+    lazy var timeTitleLabel = builder.createLabel(
         text: Constants.getCurrentDateAndTime().time,
-        textColor: .white, 
+        textColor: .white,
         fontSize: 72,
         isBold: true,
         letterSpacing: -2
     )
-    
-    lazy var timerSubtitle = builder.createLabel( // ..Label
+
+    lazy var timerSubtitleLabel = builder.createLabel(
         text: R.string.localizable.subscribeTimerSubtitle(),
         fontSize: 14,
         letterSpacing: -0.5
     )
 
-    lazy var timerTitle = builder.createLabel( // ..Label
+    lazy var timerTitleLabel = builder.createLabel(
         text: "01 : 30",
         fontSize: 20,
         isBold: true,
@@ -93,12 +136,10 @@ class SubscribeViewController: BaseViewController {
         isBold: true,
         letterSpacing: -0.5
     )
-
-    lazy var topNotificationImageView = builder.createImageView(image: R.image.notificationTopLogo())
+    
     var timer: Timer?
     private var remainingTime: Int = 90
     
-    let defaults = UserDefaultsManager.shared
     private let viewModel: SubscribeViewModel
     
     var didRestored: (() -> Void)?
@@ -121,7 +162,7 @@ class SubscribeViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        continueButton.addPulsation() // ты целый viewDidAppear добавил, хотя это вообще в setupUI стоит закинуть
+        continueButton.addPulsation() // представление контроллера еще не готово по этому запускаем анимашку после появления контроллера на экране
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -139,7 +180,8 @@ class SubscribeViewController: BaseViewController {
     }
     
     private func setupUI() {
-        self.navigationController?.setNavigationBarHidden(false, animated: true) // а какой у тебя тут навбар, что ты его показать хочешь?)
+        modalPresentationStyle = .overFullScreen
+        modalTransitionStyle = .coverVertical
         addSubviews()
         setupConstraints()
     }
@@ -147,25 +189,32 @@ class SubscribeViewController: BaseViewController {
     private func addSubviews() {
         self.view.addSubviews(
             continueButton,
-            closeImage,
+            closeImageView,
             iphoneImageView,
-            dateTitle,
-            timeTitle,
-            topNotificationImageView,
-            middleNotificationImageView,
+            dateTitleLabel,
+            timeTitleLabel,
+            protectNotificationView,
+            bottomNatificationView,
+            middleNatificationView,
+            dataNotificationView,
             bgView,
             restoreLabel,
             termsLabel,
             privacyLabel,
-            separatorLeft,
-            separatorRight
+            separatorLeftView,
+            separatorRightView
         )
-
+        
+        self.saleView.addSubviews(
+            saleLabel,
+            saleGiftImageView
+        )
+        
         self.bgView.addSubviews(
-            saleImageView,
+            saleView,
             subscriptionPlansTableView,
-            timerSubtitle,
-            timerTitle,
+            timerSubtitleLabel,
+            timerTitleLabel,
             titleLabel,
             subtitleLabel
         )
@@ -173,7 +222,7 @@ class SubscribeViewController: BaseViewController {
     
     private func setupResponsibilities() {
         let closeTapped = UITapGestureRecognizer(target: self, action: #selector(tappedOnClose(gesture:)))
-        closeImage.addGestureRecognizer(closeTapped)
+        closeImageView.addGestureRecognizer(closeTapped)
         
         let privacyTap = UITapGestureRecognizer(target: self, action: #selector(tappedOnPrivacyLabel(gesture:)))
         privacyLabel.addGestureRecognizer(privacyTap)
@@ -201,7 +250,7 @@ class SubscribeViewController: BaseViewController {
 }
 
 // MARK: - Actions
-extension SubscribeViewController {
+private extension SubscribeViewController {
     @objc
     private func tappedOnClose(gesture: UITapGestureRecognizer) {
         didTapClose?()
@@ -252,14 +301,13 @@ extension SubscribeViewController {
     private func updateTimer() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         
-        dateTitle.text = Constants.getCurrentDateAndTime().date
-        timeTitle.text = Constants.getCurrentDateAndTime().time
+        dateTitleLabel.text = Constants.getCurrentDateAndTime().date
+        timeTitleLabel.text = Constants.getCurrentDateAndTime().time
         if remainingTime > 0 {
             remainingTime -= 1
-            timerTitle.text = Constants.formatTime(remainingTime)
+            timerTitleLabel.text = TimeUtils.formatTime(remainingTime)
         } else {
             didTapClose?()
         }
     }
-    
 }

@@ -11,14 +11,6 @@ class StartViewController: BaseViewController {
     
     var didTapNext: (() -> Void)?
     
-    init() {
-        super.init(nibName: nil, bundle: nil) // зачем тебе init если он просто дублирует супер.инит?
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -29,6 +21,7 @@ class StartViewController: BaseViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         addSubviews()
         setupConstraints()
+        nextButton.addPulsation()
     }
     
     private func addSubviews() {
@@ -44,16 +37,16 @@ class StartViewController: BaseViewController {
         ])
     }
     private func setupResponsibilities() {
-        nextButton.addPulsation() // пульсация это же UI явно, что она в Responsibilities забыла?
         nextButton.addTarget(self, action: #selector(self.nextTapped), for: .touchUpInside)
     }
 }
 
 // MARK: - Actions
-extension StartViewController {
+private extension StartViewController {
     @objc
-    private func nextTapped() { // private отсюда в объявление extension лучше
+    func nextTapped() {
         didTapNext?()
     }
 }
+
 

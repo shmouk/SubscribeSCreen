@@ -11,6 +11,14 @@
 "subscribe.cell.price" = "29.99";
 "subscribe.cell.subtitle" = "Pay Less, Get More";
 "subscribe.cell.title" = "Weekly";
+"subscribe.notification.date" = "now";
+"subscribe.notification.data.subtitle" = "Potential risk detected for your card!";
+"subscribe.notification.data.title" = "Your Data Needs Protection!";
+"subscribe.notification.protect.subtitle" = "Your connection may not be secure!";
+"subscribe.notification.protect.title" = "Your Privacy Is Exposed!";
+"subscribe.save" = "Save 50%%";
 "subscribe.subtitle" = "Protect your data and privacy with Premium at half the cost.";
 "subscribe.timerSubtitle" = "Hurry up! This exclusive offer ends in";
 "subscribe.title" = "Before Time Runs Out!";
+
+
