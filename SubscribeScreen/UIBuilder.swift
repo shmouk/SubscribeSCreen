@@ -74,7 +74,7 @@ final class UIBuilder {
         if let text = text {
             let attributedString = NSMutableAttributedString(string: text)
             attributedString.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: text.count))
-            label.attributedText = attributedString
+            label.attributedText = attributedString // attributedText требует больше ресурсов чем просто label.text. Лучше прибегать к нему только если letterSpacing не дефолтный
         }
         
         return label

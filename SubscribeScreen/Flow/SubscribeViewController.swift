@@ -9,7 +9,7 @@ class SubscribeViewController: BaseViewController {
         cornerRadius: 14
     )
 
-    lazy var closeImage = builder.createImageView(image: R.image.closeLogo())
+    lazy var closeImage = builder.createImageView(image: R.image.closeLogo()) // чего не через Button? и нейминг некорректный
 
     lazy var continueButton = builder.createButton(
         backgroundColor: R.color.black(),
@@ -18,15 +18,15 @@ class SubscribeViewController: BaseViewController {
         cornerRadius: 10
     )
     
-    lazy var dateTitle = builder.createLabel(
+    lazy var dateTitle = builder.createLabel( // если это Label, то и в нейминге есть слово Label
         text: Constants.getCurrentDateAndTime().date,
         textColor: .white,
         fontSize: 14
     )
     
-    lazy var iphoneImageView = builder.createImageView(image: R.image.iphoneLogo())
+    lazy var iphoneImageView = builder.createImageView(image: R.image.iphoneLogo()) // здесь же ты не забыл ImageView
 
-    lazy var middleNotificationImageView = builder.createImageView(image: R.image.notificationMiddleLogo())
+    lazy var middleNotificationImageView = builder.createImageView(image: R.image.notificationMiddleLogo()) // а ты что, фулл картинку нотификашки вытянул?) А как ты локализацию текста собрался сделать?) Или для чего нам файл со строками?)
 
     lazy var privacyLabel = builder.createLabel(
         text: R.string.localizable.commonPrivacy(),
@@ -40,7 +40,7 @@ class SubscribeViewController: BaseViewController {
         fontSize: 14
     )
 
-    lazy var saleImageView = builder.createImageView(image: R.image.saleLogo())
+    lazy var saleImageView = builder.createImageView(image: R.image.saleLogo()) // и тут тоже как локализацию добавлять будем?
 
     lazy var separatorLeft = builder.createView(
         color: R.color.lightGray(),
@@ -66,7 +66,7 @@ class SubscribeViewController: BaseViewController {
         fontSize: 14
     )
     
-    lazy var timeTitle = builder.createLabel(
+    lazy var timeTitle = builder.createLabel( // ..Label
         text: Constants.getCurrentDateAndTime().time,
         textColor: .white, 
         fontSize: 72,
@@ -74,13 +74,13 @@ class SubscribeViewController: BaseViewController {
         letterSpacing: -2
     )
     
-    lazy var timerSubtitle = builder.createLabel(
+    lazy var timerSubtitle = builder.createLabel( // ..Label
         text: R.string.localizable.subscribeTimerSubtitle(),
         fontSize: 14,
         letterSpacing: -0.5
     )
 
-    lazy var timerTitle = builder.createLabel(
+    lazy var timerTitle = builder.createLabel( // ..Label
         text: "01 : 30",
         fontSize: 20,
         isBold: true,
@@ -121,7 +121,7 @@ class SubscribeViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        continueButton.addPulsation()
+        continueButton.addPulsation() // ты целый viewDidAppear добавил, хотя это вообще в setupUI стоит закинуть
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -139,7 +139,7 @@ class SubscribeViewController: BaseViewController {
     }
     
     private func setupUI() {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true) // а какой у тебя тут навбар, что ты его показать хочешь?)
         addSubviews()
         setupConstraints()
     }

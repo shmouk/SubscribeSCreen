@@ -12,7 +12,7 @@ class StartViewController: BaseViewController {
     var didTapNext: (() -> Void)?
     
     init() {
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: nil, bundle: nil) // зачем тебе init если он просто дублирует супер.инит?
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +44,7 @@ class StartViewController: BaseViewController {
         ])
     }
     private func setupResponsibilities() {
-        nextButton.addPulsation()
+        nextButton.addPulsation() // пульсация это же UI явно, что она в Responsibilities забыла?
         nextButton.addTarget(self, action: #selector(self.nextTapped), for: .touchUpInside)
     }
 }
@@ -52,7 +52,7 @@ class StartViewController: BaseViewController {
 // MARK: - Actions
 extension StartViewController {
     @objc
-    private func nextTapped() {
+    private func nextTapped() { // private отсюда в объявление extension лучше
         didTapNext?()
     }
 }

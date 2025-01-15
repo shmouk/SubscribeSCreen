@@ -15,7 +15,7 @@ extension SubscribeViewController {
         NSLayoutConstraint.activate([
             iphoneImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: iphoneImageViewOffset),
             iphoneImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            iphoneImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 306),
+            iphoneImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 306), // а чего не через отступы по бокам и соотнощение высоты с шириной? Тогда бы не такой отступ конский был бы на больщом резолюшене (я на про макс смотрю)
             iphoneImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 302)
         ])
         
@@ -140,3 +140,7 @@ extension SubscribeViewController {
         ])
     }
 }
+
+// запусти на промаксе. Посмотри на шарики-сепараторы. Они явно не по центру. Суть констрейнтов, чтобы не зависеть от разрешения экрана, чтобы само растягивало. Это касается и верхних констант - если бы ты не захардкодил размеры картинки верхней, а написал через отступы, то тогда бы она авторастягивалась на оставшееся после кнопки и бг пространство и не нужны никакие константы тогда.
+
+// досконально с линейкой не сидел - остальное попало вроде в макет, ну и молодец
